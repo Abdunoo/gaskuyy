@@ -1,0 +1,39 @@
+<div class="relative flex-grow-0 w-full h-full p-4 bg-white">
+	<div class="absolute inset-0 p-4 overflow-auto">
+		<div>
+			<div class="mb-4">
+				<label class="block mb-2 text-sm font-medium text-gray-600">Image Url:</label>
+				<img src="assets/item1.png" class="rounded-full h-14 w-14" alt="">
+			</div>
+			<div class="mb-4">
+				<label class="block mb-2 text-sm font-medium text-gray-600">Name:</label>
+				<input [(ngModel)]="shoes.title" type="text" class="w-full p-2 border border-gray-300 rounded"
+					placeholder="Name">
+			</div>
+			<div class="mb-4">
+				<label class="block mb-2 text-sm font-medium text-gray-600">Price:</label>
+				<input [(ngModel)]="shoes.price" type="number" class="w-full p-2 border border-gray-300 rounded"
+					placeholder="price">
+			</div>
+			<div class="mb-4">
+				<label class="block mb-2 text-sm font-medium text-gray-600">Discount:</label>
+				<input [(ngModel)]="shoes.discount" type="number" class="w-full p-2 border border-gray-300 rounded"
+					placeholder="discount">
+			</div>
+			<div class="mb-4">
+				<label class="block mb-2 text-sm font-medium text-gray-600">Stock:</label>
+				<input [(ngModel)]="shoes.qty" type="number" class="w-full p-2 border border-gray-300 rounded"
+					placeholder="stock">
+			</div>
+			<div class="mb-4">
+				<label class="block mb-2 text-sm font-medium text-gray-600">Category:</label>
+				<input [(ngModel)]="shoes.category" type="text" class="w-full p-2 border border-gray-300 rounded"
+					placeholder="Category">
+			</div>
+			<button (click)="save(shoes)"
+				class="flex items-center justify-center p-2 mt-6 text-white bg-blue-600 rounded hover:bg-blue-700">
+				<span>Save</span>
+			</button>
+		</div>
+	</div>
+</div>

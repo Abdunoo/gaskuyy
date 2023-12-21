@@ -1,0 +1,165 @@
+<div class="relative flex-grow-0 h-full max-w-full bg-gray-100 ">
+	<div class="relative flex justify-center flex-grow-0 h-full max-w-full bg-gray-100">
+		<!-- sidemenu -->
+		<div *ngIf="showSidemenu" class="flex-col hidden w-1/5 h-full px-4 pt-4 space-y-8 bg-white lg:flex">
+			<span class="text-2xl font-bold text-center text-blue-400">Gaskuyy</span>
+			<div class="px-4 space-y-2 text-sm font-medium cursor-pointer">
+
+				<div (click)="dropdown = !dropdown"
+					class="flex justify-between px-5 py-3 text-sm bg-white rounded-lg hover:text-white hover:bg-blue-400">
+					<span>Home</span>
+					<span class="icon-angle-down"></span>
+				</div>
+				<div *ngIf="dropdown" class="pl-4 space-y-0">
+					<div (click)="toAll()" routerLink="./all_shoes"
+						class="px-5 py-3 text-sm text-center flex space-x-1 rounded-lg"
+						[ngClass]="{'text-white bg-blue-400':menuAll, 'bg-white text-gray-600':!menuAll}">
+						<span>All </span><span>Shoes</span>
+					</div>
+					<div (click)="toOutdoor()" routerLink="./outdoor" class="px-5 py-3 text-sm rounded-lg"
+						[ngClass]="{'text-white bg-blue-400':menuOut, 'bg-white text-gray-600':!menuOut}">
+						<span>Outdoor</span>
+					</div>
+					<div (click)="toTennis()" routerLink="./tennis" class="px-5 py-3 text-sm rounded-lg"
+						[ngClass]="{'text-white bg-blue-400':menuTen, 'bg-white text-gray-600':!menuTen}">
+						<span>Tennis</span>
+					</div>
+					<div (click)="toRunning()" routerLink="./running" class="px-5 py-3 text-sm rounded-lg"
+						[ngClass]="{'text-white bg-blue-400':menuRun, 'bg-white text-gray-600':!menuRun}">
+						<span>Running</span>
+					</div>
+				</div>
+				<div routerLink="./chart" class="px-5 py-3 text-sm bg-white rounded-lg hover:text-white hover:bg-blue-400">
+					<span>Keranjang</span>
+				</div>
+				<div *ngIf="admin" routerLink="./admin/All_shoes"
+					class="px-5 py-3 text-sm bg-white rounded-lg hover:text-white hover:bg-blue-400">
+					<span>Admin</span>
+				</div>
+				<div class="px-5 py-3 text-sm bg-white rounded-lg hover:text-white hover:bg-blue-400">
+					<span>Profil</span>
+				</div>
+				<div (click)="logout()" routerLink="/login"
+					class="px-5 py-3 text-sm bg-white rounded-lg hover:text-white hover:bg-blue-400">
+					<span>Logout</span>
+				</div>
+			</div>
+		</div>
+		<div class="relative flex-grow-0 w-full h-full ">
+			<div class="absolute inset-0 px-4 space-y-4 overflow-auto lg:mb-0 sm:mb-14 rounded-b-3xl">
+				<!-- header -->
+				<div class="flex items-center justify-between w-full pt-4">
+					<span class="hidden text-black lg:flex" (click)="showSidemenu = !showSidemenu">
+						<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+							<path fill-rule="evenodd"
+								d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z"
+								clip-rule="evenodd" />
+						</svg>
+					</span>
+					<span class="text-black lg:hidden">
+						<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+							<path fill-rule="evenodd"
+								d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z"
+								clip-rule="evenodd" />
+						</svg>
+					</span>
+					<span class="text-3xl font-bold text-black ">Explore</span>
+					<span routerLink="./chart" class="p-2 bg-white rounded-full">
+						<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+							stroke="currentColor" stroke-width="1.5">
+							<path stroke-linecap="round" stroke-linejoin="round"
+								d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+						</svg>
+					</span>
+				</div>
+				<!-- search -->
+				<div class="flex items-center justify-between w-full space-x-4">
+					<div class="flex w-full space-x-1 text-base bg-white shadow rounded-xl">
+						<span class="py-3 pl-4 font-thin text-gray-400 icon-search"></span>
+						<input type="text" name="" id="" placeholder="looking for shoes" ondragenter=""
+							class="flex-1 block w-full p-2 py-3 pr-4 rounded-l-md focus:outline-none rounded-xl">
+					</div>
+					<div class="p-3 text-xl text-center text-white bg-blue-400 rounded-full ">
+						<span class=" icon-sliders"></span>
+					</div>
+				</div>
+				<!-- category -->
+				<div class="relative flex flex-col flex-grow w-full h-20 space-y-6 lg:hidden">
+					<span class="text-base font-medium text-gray-500">Select Category</span>
+					<div
+						class="absolute inset-0 flex items-center justify-start space-x-4 overflow-visible overflow-x-auto md">
+						<style>
+							/* Hide scrollbar for Webkit (Safari, Chrome) */
+							::-webkit-scrollbar {
+								display: none;
+							}
+
+							/* Hide scrollbar for IE and Edge */
+							::-webkit-scrollbar-thumb {
+								display: none;
+							}
+						</style>
+						<div (click)="toAll()" routerLink="./all_shoes"
+							class="px-5 py-3 text-sm text-center flex space-x-1 rounded-lg"
+							[ngClass]="{'text-white bg-blue-400':menuAll, 'bg-white text-gray-600':!menuAll}">
+							<span>All </span><span>Shoes</span>
+						</div>
+						<div (click)="toOutdoor()" routerLink="./outdoor" class="px-5 py-3 text-sm rounded-lg"
+							[ngClass]="{'text-white bg-blue-400':menuOut, 'bg-white text-gray-600':!menuOut}">
+							<span>Outdoor</span>
+						</div>
+						<div (click)="toTennis()" routerLink="./tennis" class="px-5 py-3 text-sm rounded-lg"
+							[ngClass]="{'text-white bg-blue-400':menuTen, 'bg-white text-gray-600':!menuTen}">
+							<span>Tennis</span>
+						</div>
+						<div (click)="toRunning()" routerLink="./running" class="px-5 py-3 text-sm rounded-lg"
+							[ngClass]="{'text-white bg-blue-400':menuRun, 'bg-white text-gray-600':!menuRun}">
+							<span>Running</span>
+						</div>
+					</div>
+				</div>
+				<!-- display shoes by category -->
+				<router-outlet></router-outlet>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="fixed bottom-0 flex justify-around w-full px-2 py-4 space-x-12 bg-white shadow md:max-w-full lg:hidden">
+		<div class="flex justify-around w-1/2">
+			<svg routerLink="/dashboard/all_shoes" class="w-6 h-6 text-blue-400" aria-hidden="true"
+				xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+				<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+					d="M3 8v10a1 1 0 0 0 1 1h4v-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5h4a1 1 0 0 0 1-1V8M1 10l9-9 9 9" />
+			</svg>
+			<svg *ngIf="admin" routerLink="./admin/All_shoes" xmlns="http://www.w3.org/2000/svg" fill="none"
+				viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6 text-gray-600">
+				<path stroke-linecap="round" stroke-linejoin="round"
+					d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+			</svg>
+		</div>
+		<div class="flex justify-around w-1/2">
+			<svg (click)="logout()" routerLink="/login" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+				stroke-width="1" stroke="currentColor" data-slot="icon" class="w-6 h-6 text-gray-600">
+				<path stroke-linecap="round" stroke-linejoin="round"
+					d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+			</svg>
+			<svg class="w-6 h-6 text-gray-600 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+				viewBox="0 0 14 18">
+				<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+					d="M7 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-2 3h4a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z" />
+			</svg>
+		</div>
+	</div>
+	<div class="relative flex items-center justify-center flex-grow-0 lg:hidden">
+		<div class="fixed left-auto right-auto rounded-full center bottom-6 ">
+			<div class="p-4 bg-blue-400 rounded-full " routerLink="./chart">
+				<svg class="w-6 h-6 text-white " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+					viewBox="0 0 18 20">
+					<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+						d="M12 9V4a3 3 0 0 0-6 0v5m9.92 10H2.08a1 1 0 0 1-1-1.077L2 6h14l.917 11.923A1 1 0 0 1 15.92 19Z" />
+				</svg>
+			</div>
+		</div>
+	</div>
+</div>
