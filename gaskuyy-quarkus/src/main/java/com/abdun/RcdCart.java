@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "cart")
-public class RcdChart implements Serializable {
+public class RcdCart implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,7 @@ public class RcdChart implements Serializable {
 	@JoinColumn(name = "product_id", referencedColumnName = "id")
 	private RcdProducts productId;
 
-	public RcdChart() {
+	public RcdCart() {
 
 	}
 

@@ -20,24 +20,24 @@ import jakarta.ws.rs.core.MediaType;
  *
  * @author abdun
  */
-@Path("chart")
+@Path("cart")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class WsChart {
+public class WsCart {
 
 	@Inject
-	private SrvChart srvChart;
+	private SrvCart srvCart;
 
 	// @Path("products")
 	@GET
-	public List<RcdChart> getAllProductsFromChart() {
+	public List<RcdCart> getAllProductsFromCart() {
 
-		List<RcdChart> lst = srvChart.getProductsFromChart();
-		for (RcdChart rcdChart : lst) {
-			srvChart.detach(rcdChart);
-			rcdChart.getProductId().setChartCollection(null);
-			if (rcdChart.getQty() == 0) {
-				srvChart.delete(rcdChart.getId());
+		List<RcdCart> lst = srvCart.getProductsFromCart();
+		for (RcdCart RcdCart : lst) {
+			srvCart.detach(RcdCart);
+			RcdCart.getProductId().setCartCollection(null);
+			if (RcdCart.getQty() == 0) {
+				srvCart.delete(RcdCart.getId());
 			}
 		}
 		return lst;
@@ -45,21 +45,21 @@ public class WsChart {
 
 	@Path("/{id}")
 	@GET
-	public RcdChart getDetailChart(@PathParam("id") int id) {
-		RcdChart prd = srvChart.findById(id);
-		prd.getProductId().setChartCollection(null);
+	public RcdCart getDetailCart(@PathParam("id") int id) {
+		RcdCart prd = srvCart.findById(id);
+		prd.getProductId().setCartCollection(null);
 		return prd;
 	}
 
 	@PUT
-	public void update(RcdChart rcdChart) {
-		srvChart.update(rcdChart);
+	public void update(RcdCart RcdCart) {
+		srvCart.update(RcdCart);
 	}
 
 	@Path("/{id}")
 	@DELETE
-	public void deleteChart(@PathParam("id") int id) {
-		srvChart.delete(id);
+	public void deleteCart(@PathParam("id") int id) {
+		srvCart.delete(id);
 	}
 
 }

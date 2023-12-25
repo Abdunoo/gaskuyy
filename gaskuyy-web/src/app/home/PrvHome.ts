@@ -55,19 +55,19 @@ export class PrvHome {
 
 	// chart
 	getAllChart() {
-		return this.http.get<Chart[]>('http://localhost:8080/api/' + 'chart') // mengakses API
+		return this.http.get<Chart[]>('http://localhost:8080/api/' + 'cart') // mengakses API
 	}
 
 	addProductToChart(newData: any) {
-		return this.http.put<Chart>('http://localhost:8080/api/' + 'chart', newData) // mengakses API
+		return this.http.put<Chart>('http://localhost:8080/api/' + 'cart', newData) // mengakses API
 	}
 
 	getChartById(id: any) {
-		return this.http.get<Shoes>('http://localhost:8080/api/' + 'chart/' + id) // mengakses API
+		return this.http.get<Shoes>('http://localhost:8080/api/' + 'cart/' + id) // mengakses API
 	}
 
 	removeChart(id: any) {
-		return this.http.delete('http://localhost:8080/api/' + 'chart/' + id) // mengakses API
+		return this.http.delete('http://localhost:8080/api/' + 'cart/' + id) // mengakses API
 	}
 
 

@@ -15,37 +15,37 @@ import jakarta.transaction.Transactional;
  */
 @ApplicationScoped
 @Transactional
-public class SrvChart {
+public class SrvCart {
 
 	@Inject
 	private EntityManager em;
 
-	public void update(RcdChart rcdChart) {
-		em.merge(rcdChart);
+	public void update(RcdCart rcdCart) {
+		em.merge(rcdCart);
 	}
 
 	public void detach(Object record) {
 		em.detach(record);
 	}
 
-	public List<RcdChart> getProductsFromChart() {
+	public List<RcdCart> getProductsFromCart() {
 		try {
-			TypedQuery<RcdChart> tq = em.createQuery("SELECT h FROM RcdChart h ORDER BY h.id DESC",
-					RcdChart.class);
+			TypedQuery<RcdCart> tq = em.createQuery("SELECT h FROM RcdCart h ORDER BY h.id DESC",
+					RcdCart.class);
 			return tq.getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}
 	}
 
-	public RcdChart findById(int id) {
-		RcdChart rcdChart = em.find(RcdChart.class, id);
-		return rcdChart;
+	public RcdCart findById(int id) {
+		RcdCart rcdCart = em.find(RcdCart.class, id);
+		return rcdCart;
 	}
 
 	public void delete(int id) {
-		System.out.println("remove chart");
-		RcdChart r = findById(id);
+		System.out.println("remove cart");
+		RcdCart r = findById(id);
 		// detach(r);
 		System.out.println("data " + r.getId());
 		em.remove(r);

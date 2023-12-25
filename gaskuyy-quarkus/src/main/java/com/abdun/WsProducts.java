@@ -33,7 +33,7 @@ public class WsProducts {
 		int end = start + limit;
 		List<RcdProducts> lst = srvProducts.getAllProducts(start, end);
 		for (RcdProducts rcdProducts : lst) {
-			rcdProducts.setChartCollection(null);
+			rcdProducts.setCartCollection(null);
 		}
 		return lst;
 	}
@@ -48,7 +48,7 @@ public class WsProducts {
 	@GET
 	public RcdProducts getProductById(@PathParam("id") int id) {
 		RcdProducts prd = srvProducts.findById(id);
-		prd.setChartCollection(null);
+		prd.setCartCollection(null);
 		return prd;
 	}
 
@@ -57,14 +57,14 @@ public class WsProducts {
 	public List<RcdProducts> getProductByCategory(@PathParam("category") String category) {
 		List<RcdProducts> prd = srvProducts.findByCategory(category);
 		for (RcdProducts rcdProducts : prd) {
-			rcdProducts.setChartCollection(null);
+			rcdProducts.setCartCollection(null);
 		}
 		return prd;
 	}
 
 	@Path("/{id}")
 	@DELETE
-	public void deleteChart(@PathParam("id") int id) {
+	public void deleteProduct(@PathParam("id") int id) {
 		srvProducts.delete(id);
 	}
 

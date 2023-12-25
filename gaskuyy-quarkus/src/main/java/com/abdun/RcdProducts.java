@@ -43,7 +43,7 @@ public class RcdProducts implements Serializable {
 	@Column(name = "category")
 	private String category;
 	@OneToMany(mappedBy = "productId")
-	private Collection<RcdChart> chartCollection;
+	private Collection<RcdCart> cartCollection;
 
 	public RcdProducts() {
 
@@ -105,12 +105,12 @@ public class RcdProducts implements Serializable {
 		this.category = category;
 	}
 
-	public Collection<RcdChart> getChartCollection() {
-		return chartCollection;
+	public Collection<RcdCart> getCartCollection() {
+		return cartCollection;
 	}
 
-	public void setChartCollection(Collection<RcdChart> chartCollection) {
-		this.chartCollection = chartCollection;
+	public void setCartCollection(Collection<RcdCart> cartCollection) {
+		this.cartCollection = cartCollection;
 	}
 
 }
