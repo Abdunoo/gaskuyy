@@ -28,10 +28,16 @@ public class SrvProducts {
 		em.detach(record);
 	}
 
-	public List<RcdProducts> getAllProducts(int start, int end) {
+	public List<RcdProducts> getAllProducts(int start, int end, String searchQuery) {
+		String sql = "SELECT h FROM RcdProducts h ";
+
+			sql = sql+"WHERE h.title LIKE :searchQuery ";
+		
+		sql = sql + "ORDER BY h.id DESC";
 		try {
-			TypedQuery<RcdProducts> tq = em.createQuery("SELECT h FROM RcdProducts h ORDER BY h.id DESC",
+			TypedQuery<RcdProducts> tq = em.createQuery(sql,
 					RcdProducts.class);
+			tq.setParameter("searchQuery", "%" + searchQuery + "%");
 			tq.setFirstResult(start);
 			tq.setMaxResults(end);
 			return tq.getResultList();
@@ -47,12 +53,13 @@ public class SrvProducts {
 		return prd.getSingleResult();
 	}
 
-	public List<RcdProducts> findByCategory(String category) {
+	public List<RcdProducts> findByCategory(String category, String searchQuery) {
 		try {
 			TypedQuery<RcdProducts> tq = em.createQuery(
-					"SELECT h FROM RcdProducts h WHERE h.category = :category ORDER BY h.id DESC",
+					"SELECT h FROM RcdProducts h WHERE h.category = :category AND h.title LIKE :searchQuery ORDER BY h.id DESC",
 					RcdProducts.class);
 			tq.setParameter("category", category);
+			tq.setParameter("searchQuery", "%" + searchQuery + "%");
 			return tq.getResultList();
 		} catch (NoResultException e) {
 			return null;
