@@ -30,8 +30,7 @@ public class WsProducts {
 	public List<RcdProducts> getAllProducts(@QueryParam("page") int page, @QueryParam("limit") int limit, @QueryParam("search") String searchQuery ) {
 		System.out.println("search for = "+searchQuery);
 		int start = (page - 1) * limit;
-		int end = start + limit;
-		List<RcdProducts> lst = srvProducts.getAllProducts(start, end, searchQuery);
+		List<RcdProducts> lst = srvProducts.getAllProducts(start, limit, searchQuery);
 		for (RcdProducts rcdProducts : lst) {
 			rcdProducts.setCartCollection(null);
 		}

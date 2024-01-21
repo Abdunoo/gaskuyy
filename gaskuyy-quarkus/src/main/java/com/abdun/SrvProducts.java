@@ -28,7 +28,7 @@ public class SrvProducts {
 		em.detach(record);
 	}
 
-	public List<RcdProducts> getAllProducts(int start, int end, String searchQuery) {
+	public List<RcdProducts> getAllProducts(int start, int limit, String searchQuery) {
 		String sql = "SELECT h FROM RcdProducts h ";
 
 			sql = sql+"WHERE h.title LIKE :searchQuery ";
@@ -39,7 +39,7 @@ public class SrvProducts {
 					RcdProducts.class);
 			tq.setParameter("searchQuery", "%" + searchQuery + "%");
 			tq.setFirstResult(start);
-			tq.setMaxResults(end);
+			tq.setMaxResults(limit);
 			return tq.getResultList();
 		} catch (NoResultException e) {
 			return null;
