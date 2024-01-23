@@ -1,19 +1,18 @@
 package com.abdun;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Collection;
 
 import jakarta.persistence.Basic;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  *
@@ -31,18 +30,20 @@ public class RcdProducts implements Serializable {
 	@Column(name = "id")
 	public Integer id;
 	@Column(name = "title")
+	@NotBlank
 	private String title;
 	@Column(name = "image_url")
 	private String imageUrl;
 	@Column(name = "qty")
 	private Integer qty;
 	@Column(name = "discount")
+	@Max(20000)
 	private Integer discount;
 	@Column(name = "price")
 	private Integer price;
 	@Column(name = "category")
 	private String category;
-	@OneToMany(mappedBy = "productId")
+	@OneToMany(mappedBy = "product")
 	private Collection<RcdCart> cartCollection;
 
 	public RcdProducts() {
