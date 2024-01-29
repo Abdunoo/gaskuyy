@@ -31,11 +31,11 @@ export class PrvHome {
 
 	// products
 	getAllProducts(page: number, limit: number) {
-		return this.http.get<Shoes[]>('http://localhost:8080/api/' + `products?page=` + page + '&limit=' + limit) // mengakses API
+		return this.http.get<Shoes[]>('http://localhost:8080/api/' + `products?page=` + page + '&limit=' + limit+'&search= ') // mengakses API
 	}
 
 	getPopularProducts(page: number, limit: number) {
-		return this.http.get<Shoes[]>('http://localhost:8080/api/' + `products?page=` + page + '&limit=' + limit) // mengakses API
+		return this.http.get<Shoes[]>('http://localhost:8080/api/' + `products?page=` + page + '&limit=' + limit+'&search= ') // mengakses API
 	}
 
 	addProduct(newData: any) {
@@ -47,7 +47,7 @@ export class PrvHome {
 	}
 
 	getProductByCategory(category: any) {
-		return this.http.get<Shoes>('http://localhost:8080/api/' + 'products/cat/' + category) // mengakses API
+		return this.http.get<Shoes>('http://localhost:8080/api/' + 'products/cat/' + category+'?search= ') // mengakses API
 	}
 	removeProduct(id: any) {
 		return this.http.delete<Shoes>('http://localhost:8080/api/' + 'products/' + id) // mengakses API
