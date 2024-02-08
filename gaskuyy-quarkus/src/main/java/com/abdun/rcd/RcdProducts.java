@@ -1,4 +1,4 @@
-package com.abdun;
+package com.abdun.rcd;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -43,6 +43,8 @@ public class RcdProducts implements Serializable {
 	private Integer price;
 	@Column(name = "category")
 	private String category;
+	@Column(name = "user_id")
+	private Integer userId;
 	@OneToMany(mappedBy = "product")
 	private Collection<RcdCart> cartCollection;
 
@@ -112,6 +114,14 @@ public class RcdProducts implements Serializable {
 
 	public void setCartCollection(Collection<RcdCart> cartCollection) {
 		this.cartCollection = cartCollection;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 }

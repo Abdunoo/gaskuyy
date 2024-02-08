@@ -1,6 +1,8 @@
-package com.abdun;
+package com.abdun.srv;
 
 import java.util.List;
+
+import com.abdun.rcd.RcdProducts;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -30,16 +32,31 @@ public class SrvProducts {
 		em.detach(record);
 	}
 
-	public List<RcdProducts> getAllProducts(int start, int limit, String searchQuery) {
+	public List<RcdProducts> getAllProducts(int start, int limit, String category, String searchQuery, int userId) {
 		try {
 			String sql = "SELECT h FROM RcdProducts h ";
 
-			sql = sql+"WHERE h.title LIKE :searchQuery ";
-		
+			sql = sql + "WHERE h.userId = :userId ";
+
+			if (category != null) {
+				sql = sql+"AND h.category = :category ";
+			}
+
+			if (searchQuery != null) {
+				sql = sql+"AND h.title LIKE :searchQuery ";
+			}
+			
+
 			sql = sql + "ORDER BY h.id DESC";
-			TypedQuery<RcdProducts> tq = em.createQuery(sql,
-					RcdProducts.class);
-			tq.setParameter("searchQuery", "%" + searchQuery + "%");
+			TypedQuery<RcdProducts> tq = em.createQuery(sql, RcdProducts.class);
+			tq.setParameter("userId", userId);
+			if (searchQuery != null) {
+				tq.setParameter("searchQuery", "%" + searchQuery + "%");
+			}
+			
+			if (category != null) {
+				tq.setParameter("category", category);
+			}
 			tq.setFirstResult(start);
 			tq.setMaxResults(limit);
 			return tq.getResultList();
@@ -48,35 +65,23 @@ public class SrvProducts {
 		}
 	}
 
-	public RcdProducts findById(int id) {
+	public RcdProducts findById(int id, int userId) {
 			try {
-				TypedQuery<RcdProducts> prd = em.createQuery("SELECT h FROM RcdProducts h WHERE h.id = :id",
+				TypedQuery<RcdProducts> prd = em.createQuery("SELECT h FROM RcdProducts h WHERE h.id = :id AND h.userId = :userId",
 					RcdProducts.class);
 			prd.setParameter("id", id);
+			prd.setParameter("userId", userId);
 			return prd.getSingleResult();
 			} catch (Exception e) {
 				return null;
 			}
-	}
+		}
 
-	public List<RcdProducts> findByCategory(String category, String searchQuery) {
-			try {
-				TypedQuery<RcdProducts> tq = em.createQuery(
-					"SELECT h FROM RcdProducts h WHERE h.category = :category AND h.title LIKE :searchQuery ORDER BY h.id DESC",
-					RcdProducts.class);
-			tq.setParameter("category", category);
-			tq.setParameter("searchQuery", "%" + searchQuery + "%");
-			return tq.getResultList();
-			} catch (Exception e) {
-				return null;
-			}
-	}
-
-	public void delete(int id) {
-		RcdProducts prd = findById(id);
+	public void delete(int id, int userId) {
+		RcdProducts prd = findById(id, userId);
 		if (prd != null) {
 			em.remove(prd);	
-		} 
+		}
 	}
 
 }

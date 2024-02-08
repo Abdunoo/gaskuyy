@@ -1,4 +1,4 @@
-package com.abdun;
+package com.abdun.rcd;
 
 import java.io.Serializable;
 
@@ -29,6 +29,9 @@ public class RcdCart implements Serializable {
 	public int id;
 	@Column(name = "qty")
 	private int qty;
+
+	@Column(name = "user_id")
+	private Integer userId;
 
 	@Column(name="product_id")
 	private int productId;
@@ -72,6 +75,16 @@ public class RcdCart implements Serializable {
 	public void setProduct(RcdProducts product) {
 		this.product = product;
 	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	
 
 	
 

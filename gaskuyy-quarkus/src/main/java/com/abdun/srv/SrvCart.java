@@ -1,8 +1,10 @@
-package com.abdun;
+package com.abdun.srv;
 
 import java.util.List;
 
 import javax.management.RuntimeErrorException;
+
+import com.abdun.rcd.RcdCart;
 
 import io.vertx.mutiny.ext.web.handler.ErrorHandler;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -33,30 +35,35 @@ public class SrvCart {
 		em.detach(record);
 	}
 
-	public List<RcdCart> getProductsFromCart() {
+	public List<RcdCart> getProductsFromCart(int userId) {
 			try {
-				TypedQuery<RcdCart> tq = em.createQuery("SELECT h FROM RcdCart h ORDER BY h.id DESC",
+				TypedQuery<RcdCart> tq = em.createQuery("SELECT h FROM RcdCart h WHERE h.userId = :userId ORDER BY h.id DESC",
 					RcdCart.class);
+					tq.setParameter("userId", userId);
 			return tq.getResultList();
 			} catch (Exception e) {
 				return null;
 			}
 	}
 
-	public RcdCart findById(int id) {
+	public RcdCart findById(int id, int userId) {
 		try {
-			RcdCart rcdCart = em.find(RcdCart.class, id);
-			return rcdCart;
+			TypedQuery<RcdCart> tq = em.createQuery("SELECT h FROM RcdCart h WHERE h.id = :id AND h.userId = :userId", RcdCart.class);
+			tq.setParameter("id", id);
+			tq.setParameter("userId", userId);
+			return tq.getSingleResult();
+
 		} catch (Exception e) {
 			return null;
 		}
 	}
 	
-	public RcdCart findByProductId(int id) {
+	public RcdCart findByProductId(int id, int userId) {
 		try {
-			TypedQuery<RcdCart> tq = em.createQuery("SELECT h FROM RcdCart h WHERE h.productId = :id",
-					RcdCart.class);	
+			TypedQuery<RcdCart> tq = em.createQuery("SELECT h FROM RcdCart h WHERE h.productId = :id AND h.userId = :userId",
+					RcdCart.class);
 					tq.setParameter("id", id);
+					tq.setParameter("userId", userId);
 			return tq.getSingleResult();
 		} catch (Exception e) {
 			return null;
@@ -64,8 +71,8 @@ public class SrvCart {
 		
 	}
 
-	public void delete(int id) {
-			RcdCart r = findById(id);
+	public void delete(int id, int userId) {
+			RcdCart r = findById(id, userId);
 			if (r != null) {
 				em.remove(r);	
 			} else {
