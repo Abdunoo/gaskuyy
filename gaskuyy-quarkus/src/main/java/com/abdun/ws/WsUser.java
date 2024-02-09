@@ -14,7 +14,11 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.random.RandomGenerator;
 
+import com.abdun.rcd.RcdCart;
+import com.abdun.rcd.RcdProducts;
 import com.abdun.rcd.RcdUser;
+import com.abdun.srv.SrvCart;
+import com.abdun.srv.SrvProducts;
 import com.abdun.srv.SrvUser;
 
 import io.quarkus.logging.Log;
@@ -22,6 +26,8 @@ import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
+import jakarta.transaction.TransactionScoped;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -35,12 +41,17 @@ import net.bytebuddy.utility.RandomString;
  * @author abdun
  */
 @Path("user")
+@Transactional
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class WsUser {	
 
 	@Inject
 	SrvUser srvUser;
+	@Inject 
+	SrvProducts srvProducts;
+	@Inject
+	SrvCart srvCart;
 
 	@Path("new")
 	@GET
@@ -78,7 +89,24 @@ public class WsUser {
 		} catch (Exception e) {
 			throw e;
 		}
+	}
 
+	@Path("delete_all_user")
+	@GET
+	public void deleteAllUsers(){
+		
+		List<RcdUser> users = srvUser.getUsers();
+		for (RcdUser rcdUser : users) {
+			List<RcdCart> carts = srvCart.getProductsFromCart(rcdUser.getId());
+			for (RcdCart rcdCart : carts) {
+				srvCart.delete(rcdCart.getId(), rcdUser.getId());
+			}
+			List<RcdProducts> products = srvProducts.getAllProducts(0, 1000, null, null, rcdUser.getId());
+			for (RcdProducts rcdProducts : products) {
+				srvProducts.delete(rcdProducts.getId(), rcdUser.getId());
+			}
+			srvUser.deleteById(rcdUser.getId());
+		}
 	}
 	
 }
