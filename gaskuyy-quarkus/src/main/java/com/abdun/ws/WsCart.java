@@ -10,8 +10,9 @@ import com.abdun.dto.CurrentUser;
 import com.abdun.rcd.RcdCart;
 import com.abdun.srv.SrvCart;
 
+
 import io.quarkus.logging.Log;
-import io.quarkus.qute.ErrorCode;
+import com.abdun.error.ErrorCode;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 import jakarta.websocket.server.PathParam;
@@ -45,7 +46,7 @@ public class WsCart {
 	public List<RcdCart> getAllProductsFromCart()  {
 		List<RcdCart> lst = srvCart.getProductsFromCart(currentUser.getUserId());
 		if (lst.isEmpty()) {
-			throw new WebApplicationException("Produk di keranjang kosong",Response.Status.NO_CONTENT); 
+			throw ErrorCode.ER0000.exception("produk di keranjang kosong");
 		}
 		for (RcdCart rcdCart : lst) {
 			srvCart.detach(rcdCart);
@@ -69,7 +70,7 @@ public class WsCart {
 			cart.setUserId(null);
 
 		} else {
-			throw new WebApplicationException("Produk tidak ditemukan di keranjang",Response.Status.NOT_FOUND); 
+			throw ErrorCode.ER0000.exception("produk di keranjang dengan id "+id+" kosong");
 		}
 		return cart;
 	}
@@ -105,10 +106,11 @@ public class WsCart {
 				cart.setQty(cart.getQty() + 1);
 				srvCart.update(cart);		
 			} else {
-				throw new WebApplicationException("Tidak ditemukan data cart", Response.Status.BAD_GATEWAY);
+				throw ErrorCode.ER0000.exception("produk di keranjang dengan id "+id+" kosong");
 			}
 		} catch (Exception e) {
-			throw new WebApplicationException("Gagal menambah quantity produk", Response.Status.BAD_GATEWAY);
+			throw ErrorCode.ER0000.exception("error => "+e.getMessage());
+
 		}
 	}
 	
@@ -124,7 +126,7 @@ public class WsCart {
 				Log.info("produk null");
 			}
 		} catch (Exception e) {
-			throw new WebApplicationException("Gagal mengurangi quantity produk", Response.Status.BAD_GATEWAY);
+			throw ErrorCode.ER0000.exception("error => "+e.getMessage());
 		}
 	}
 
@@ -132,7 +134,6 @@ public class WsCart {
 	@DELETE
 	public void deleteCart(@PathParam("id") int id)  {
 		srvCart.delete(id, currentUser.getUserId());			
-			
 	}
 
 }

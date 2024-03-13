@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.abdun.error.ErrorCode;
 import com.abdun.rcd.RcdUser;
 import com.abdun.srv.SrvUser;
 
@@ -32,7 +33,7 @@ public class UserUniqueKeyFilter implements ContainerRequestFilter {
 		if (requestContext.getUriInfo().getPathParameters().containsKey("unique_key")) {
 			RcdUser user = srvUser.findByUniqueKey(requestContext.getUriInfo().getPathParameters().getFirst("unique_key") );
 			if (user == null) {
-				throw new WebApplicationException("Unique key tidak ditemukan",Response.Status.FORBIDDEN); 
+				throw ErrorCode.ER0001.exception("user tidak ditemukan");
 			}
 			currentUser.setUserId(user.getId());
 		}

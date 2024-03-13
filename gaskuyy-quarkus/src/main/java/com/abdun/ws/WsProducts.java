@@ -5,6 +5,7 @@ import java.rmi.UnexpectedException;
 import java.util.List;
 
 import com.abdun.dto.CurrentUser;
+import com.abdun.error.ErrorCode;
 import com.abdun.rcd.RcdProducts;
 import com.abdun.srv.SrvProducts;
 
@@ -44,7 +45,7 @@ public class WsProducts {
 			int start = (page - 1) * limit;
 			List<RcdProducts> lst = srvProducts.getAllProducts(start, limit, category, searchQuery, currentUser.getUserId());
 			if (lst.isEmpty() || lst == null) {
-				throw new WebApplicationException("Data produk kosong",Response.Status.NO_CONTENT); 
+				throw ErrorCode.ER0000.exception("produk kosong");
 			}
 			for (RcdProducts rcdProducts : lst) {
 				rcdProducts.setCartCollection(null);
@@ -53,7 +54,7 @@ public class WsProducts {
 			return lst;
 
 		} catch (UnknownError e) {
-			throw new WebApplicationException("Gagal mengambil data produk",Response.Status.BAD_GATEWAY); 
+			throw ErrorCode.ER0000.exception("error => " + e.getMessage());
 		}
 
 	}
@@ -64,7 +65,7 @@ public class WsProducts {
 			rcdProducts.setUserId(currentUser.getUserId());
 			srvProducts.update(rcdProducts);
 		} catch (UnknownError e) {
-			throw new WebApplicationException("Gagal update data produk",Response.Status.BAD_GATEWAY); 
+			throw ErrorCode.ER0000.exception("error => " + e.getMessage());
 		}	
 	}
 
@@ -76,10 +77,12 @@ public class WsProducts {
 			if (prd != null) {
 				prd.setCartCollection(null);
 				prd.setUserId(null);
+			} else {
+				throw ErrorCode.ER0000.exception("produk dengan id " + id + " tidak ditemukan");
 			}
 			return prd;
 		} catch (UnknownError e) {
-			throw new WebApplicationException("Produk tidak ditemukan",Response.Status.NOT_FOUND); 
+			throw ErrorCode.ER0000.exception("error => " + e.getMessage());
 		}
 	}
 
@@ -111,7 +114,7 @@ public class WsProducts {
 		try {
 			srvProducts.delete(id, currentUser.getUserId());		
 		} catch (UnknownError e) {
-			throw new WebApplicationException("Gagal hapus data produk karena produk ada di keranjang",Response.Status.CONFLICT); 
+			throw ErrorCode.ER0000.exception("error => " + e.getMessage());
 		}
 	}
 
